@@ -1,0 +1,71 @@
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+// @import 'custom';
+@import '~bootstrap/scss/bootstrap';
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+$width: 40px;
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.squares {
+  display: flex;
+  flex-wrap: wrap;
+  width: $width * 5 + 2;
+  padding: 0;
+  margin: 0;
+  border: 1px solid blue;
+}
+
+.square {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  width: $width;
+  height: $width;
+  line-height: $width;
+  text-align: center;
+  border: 1px solid blue;
+  cursor: pointer;
+}
+
+.square:hover {
+  background-color: lavender;
+}
+
+.square[data-number='-1'] {
+  background-color: red;
+}
+.square[data-number='0'] {
+  background-color: grey;
+}
+.square[data-number='1'] {
+  background-color: yellow;
+}
+.square[data-number='2'] {
+  background-color: green;
+}
