@@ -3,19 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Funny cubes game</title>
   </head>
 
-  <body>
+  <body class="body">
     <div class="container">
-      <div class="row">
-        <div class="col-8">One of three columns 1.1</div>
-        <div class="col-4">One of three columns 1.2</div>
+      <div class="row align-items-center">
+        <div class="col-12 col-sm-8 p-2 align-self-center">
+          <h1 class="text-center">Funny cubes game</h1>
+          <div class="d-flex justify-content-between">
+            <div class="d-inline-block">
+              <button type="button" class="btn btn-primary">Primary</button>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </div>
+            <div class="d-inline-block">
+              <div class="btn btn-primary col-5">1234</div>
+              <div class="btn btn-primary col-5">01:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 p-2 text-center align-self-center d-none d-sm-block">
+          <button type="button" class="btn btn-dark">Rules</button>
+        </div>
       </div>
       <div class="row">
-        <div class="col-8 box"></div>
-        <div class="col-4">Result table</div>
+        <div class="col-12 col-sm-8 p-2 align-self-center box"></div>
+        <div class="col-4 p-2 d-none d-sm-block">
+          <h4 class="text-center">Result table</h4>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="p-2 text-center" scope="col">#</th>
+                <th class="p-2 text-center" scope="col">Name</th>
+                <th class="p-2 text-center" scope="col">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="p-1 text-center" scope="row">1</th>
+                <td class="p-1 text-center text-break">mark</td>
+                <td class="p-1 text-center">25</td>
+              </tr>
+              <tr>
+                <th class="p-1 text-center" scope="row">2</th>
+                <td class="p-1 text-center text-break">Jacob</td>
+                <td class="p-1 text-center">25</td>
+              </tr>
+              <tr>
+                <th class="p-1 text-center" scope="row">3</th>
+                <td class="p-1 text-center text-break">Larry</td>
+                <td class="p-1 text-center">25</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </body>
