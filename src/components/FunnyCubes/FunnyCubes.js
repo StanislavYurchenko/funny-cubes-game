@@ -7,34 +7,52 @@ export default class FunnyCubes {
     this._quantitySquare = 144;
     this._minSquareValue = -1;
     this._maxSquareValue = 10;
+    this._minActiveSquareValue = -1;
+    this._maxActiveSquareValue = 2;
     this._score = 0;
     this._rootRef = document.querySelector(rootSelector);
     this._scoreRef = document.querySelectorAll(scopeSelector);
     this._squaresRef = null;
     this._squaresData = [];
     this._isGameOver = null;
+    this._isPause = false;
     this.init();
+  }
+
+  get score() {
+    return this._score;
   }
 
   init() {
     const init = true;
-    this._squaresData = this._creatSquares(init);
     this._renderSquareList();
+    this._squaresData = this._creatSquares(init);
     this._renderSquareItem(this._squaresData);
     this._squaresRef = this._rootRef.firstChild;
     this._squaresRef.addEventListener('click', this._onSquare.bind(this));
   }
 
   startNewGame() {
+    this._score = 0;
+    this._renderScope();
     this._isGameOver = false;
     this._squaresData = this._creatSquares();
     this._renderSquareItem(this._squaresData);
   }
 
-  initGameOver(callback) {
+  initGameOver() {
+    const init = true;
     this._isGameOver = true;
-    console.log('Game over, your score is ', this._score);
-    callback && callback();
+    this._squaresData = this._creatSquares(init);
+    this._renderSquareItem(this._squaresData);
+  }
+
+  pause() {
+    this._isPause = true;
+  }
+
+  resume() {
+    this._isPause = false;
   }
 
   _randomInteger(min, max) {
@@ -43,10 +61,10 @@ export default class FunnyCubes {
 
   _creatSquares(init = false) {
     const array = Array.from({ length: this._quantitySquare }, () =>
-      init ? 0 : this._randomInteger(-1, 10),
+      init ? 0 : this._randomInteger(this._minSquareValue, this._maxSquareValue),
     );
     return array.map(el => {
-      const isActive = el >= -1 && el <= 2 && el !== 0;
+      const isActive = el >= this._minActiveSquareValue && el <= this._maxActiveSquareValue && el !== 0;
       return {
         number: isActive ? el : 0,
         isActiveSquare: isActive,
@@ -55,7 +73,7 @@ export default class FunnyCubes {
   }
 
   _renderSquareList() {
-    this._rootRef.innerHTML = squaresListTemplate();
+    this._rootRef.insertAdjacentHTML('afterbegin', squaresListTemplate());
   }
 
   _renderSquareItem(data) {
@@ -63,10 +81,11 @@ export default class FunnyCubes {
   }
 
   _renderScope() {
-    this._scoreRef.forEach(elem => elem.textContent = `${this._score}`.padStart(4, '0'))
+    this._scoreRef.forEach(elem => (elem.textContent = this._score));
   }
 
   _onSquare(event) {
+    if (this._isGameOver || this._isPause) return
     const square = event.target;
     const squares = Array.from(event.currentTarget.children);
     const number = Number(square.dataset.number);
@@ -86,7 +105,10 @@ export default class FunnyCubes {
         const randomSquare = this._randomInteger(0, this._quantitySquare - 1);
         if (squares[randomSquare].dataset.isActiveSquare === 'true') continue;
 
-        const randomSquareValue = this._randomInteger(-1, 2);
+        const randomSquareValue = this._randomInteger(
+          this._minActiveSquareValue,
+          this._maxActiveSquareValue,
+        );
         if (randomSquareValue === 0) continue;
 
         this._squaresData[randomSquare] = { number: randomSquareValue, isActiveSquare: true };
@@ -99,7 +121,7 @@ export default class FunnyCubes {
       this._isGameOver = this._squaresData.every(square => !square.isActiveSquare);
 
       if (this._isGameOver) {
-        this._callBackTimerReset()
+        this._callBackTimerReset();
         this.initGameOver();
         return;
       }

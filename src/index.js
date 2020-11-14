@@ -3,9 +3,13 @@ import 'bootstrap';
 import $ from 'jquery';
 import FunnyCubes from './components/FunnyCubes/FunnyCubes'
 import Timer from './components/Timer/Timer'
+import HallOfFame from './components/HallOfFame/HallOfFame'
+import RenderHallOfFame from './components/RenderHallOfFame/RenderHallOfFame'
 
 const btnStartGameRef = document.querySelector('.js-start');
 const btnNewGameRef = document.querySelector('.js-new-game');
+const formAddToHallOfFameRef = document.querySelector('.js-add-result');
+const pauseLayerRef = document.querySelector('.js-pause')
 
 function toggleButtonStatus(event) {
   const buttonRef = event.currentTarget
@@ -37,44 +41,64 @@ function onBtnStartGame(event) {
   }
 
   if (buttonStatus === 'pause') {
-    gameTimer.pause()
+    gameTimer.pause();
+    funnyCubes.pause();
+    pauseLayerRef.classList.remove("invisible");
   }
 
   if (buttonStatus === 'resume') {
     gameTimer.resume()
+    funnyCubes.resume();
+    pauseLayerRef.classList.add("invisible");
   }
 
   toggleButtonStatus(event);
-
 }
 
 function onBtnNewGame() {
+  pauseLayerRef.classList.add("invisible");
   funnyCubes.startNewGame();
   gameTimer.start();
   setToStartButtonStatus(btnStartGameRef);
 }
 
 function gameOver() {
-  console.log('stop game over');
   funnyCubes.initGameOver();
   setToStartButtonStatus(btnStartGameRef);
   $('.js-result-modal').modal('show');
 }
 
 function timeOver() {
-  console.log('stop timeOver');
   gameTimer.reset();
   setToStartButtonStatus(btnStartGameRef);
   $('.js-result-modal').modal('show');
 }
 
+function onFormAddToHallOfFame(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const result = {
+    name: form.elements.name.value,
+    score: funnyCubes.score,
+  }
+  console.log(result);
+  hallOfFame.addMember(result);
+  RenderHallOfFame('.js-hall-of-fame', hallOfFame.ratingList, result)
+
+  form.reset();
+  $('.js-result-modal').modal('hide');
+}
+
 const funnyCubes = new FunnyCubes('.js-box', '.js-scope', timeOver);
-const gameTimer = new Timer(40000, '.js-timer', gameOver);
+const gameTimer = new Timer(3000, '.js-timer', gameOver);
+const hallOfFame = new HallOfFame();
+
 
 btnStartGameRef.addEventListener('click', onBtnStartGame)
 btnNewGameRef.addEventListener('click', onBtnNewGame)
+formAddToHallOfFameRef.addEventListener('submit', onFormAddToHallOfFame)
 
-
+RenderHallOfFame('.js-hall-of-fame', hallOfFame.ratingList)
 
 
 
