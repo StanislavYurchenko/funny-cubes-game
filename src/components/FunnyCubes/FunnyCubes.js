@@ -16,7 +16,6 @@ export default class FunnyCubes {
     this._squaresData = [];
     this._isGameOver = null;
     this._isPause = false;
-    this.init();
   }
 
   get score() {
@@ -64,7 +63,8 @@ export default class FunnyCubes {
       init ? 0 : this._randomInteger(this._minSquareValue, this._maxSquareValue),
     );
     return array.map(el => {
-      const isActive = el >= this._minActiveSquareValue && el <= this._maxActiveSquareValue && el !== 0;
+      const isActive =
+        el >= this._minActiveSquareValue && el <= this._maxActiveSquareValue && el !== 0;
       return {
         number: isActive ? el : 0,
         isActiveSquare: isActive,
@@ -85,7 +85,7 @@ export default class FunnyCubes {
   }
 
   _onSquare(event) {
-    if (this._isGameOver || this._isPause) return
+    if (this._isGameOver || this._isPause) return;
     const square = event.target;
     const squares = Array.from(event.currentTarget.children);
     const number = Number(square.dataset.number);

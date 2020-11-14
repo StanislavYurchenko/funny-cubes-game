@@ -9,10 +9,9 @@ export default class CountdownTimer {
     this._callBackTimeOver = callBackTimeOver;
     this._timeLeft = 0;
     this._intervalId = null;
-    this._init();
   }
 
-  _init() {
+  init() {
     this._render(this._convertTime(this._setPointTime));
     clearTimeout(this._intervalId);
     this._stopPauseTime = Date.now();
@@ -31,7 +30,7 @@ export default class CountdownTimer {
   }
 
   reset() {
-    this._init();
+    this.init();
   }
 
   _render(time) {
@@ -48,11 +47,11 @@ export default class CountdownTimer {
     const secs = Math.round((time % (1000 * 60)) / 1000)
       .toString()
       .padStart(2, '0');
-    return `${hours}:${mins}:${secs}`
+    return `${hours}:${mins}:${secs}`;
   }
 
   start() {
-    this._init();
+    this.init();
     this._startTime = Date.now();
     this._tick();
   }
@@ -69,7 +68,7 @@ export default class CountdownTimer {
   }
 
   stop() {
-    this._init();
+    this.init();
     this._callBackTimeOver && this._callBackTimeOver();
   }
 }

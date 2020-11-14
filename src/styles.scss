@@ -6,8 +6,6 @@ html {
   font-size: 16px;
 }
 
-body {
-}
 * {
   // outline: 1px solid red;
 }
@@ -26,8 +24,6 @@ img {
   height: auto;
 }
 
-$width: 40px;
-
 .box {
   padding: 20px;
 }
@@ -35,7 +31,6 @@ $width: 40px;
 .squares {
   padding: 0;
   margin: 0;
-  // border: 1px solid blue;
 }
 
 .square {
@@ -43,7 +38,6 @@ $width: 40px;
   margin: 0;
   list-style: none;
   height: 30px;
-  // border: 1px solid blue;
   cursor: pointer;
 }
 
@@ -83,7 +77,6 @@ $width: 40px;
   opacity: 1 !important;
 }
 
-/* Maybe even support hover opacity shifts */
 .opacity-0h5 {
   opacity: 0 !important;
   transition: opacity 0.25s ease-in-out !important;
