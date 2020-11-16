@@ -16,6 +16,7 @@ export default class CountdownTimer {
     clearTimeout(this._intervalId);
     this._stopPauseTime = Date.now();
     this._startPauseTime = this._stopPauseTime;
+    this._totalPauseTime = 0;
   }
 
   _tick() {

@@ -42,8 +42,6 @@ function setToPauseButtonStatus(buttonRef) {
   buttonRef.dataset.status = 'pause';
 }
 
-
-
 function onBtnStartGame(event) {
   const buttonRef = event.currentTarget;
   const buttonStatus = buttonRef.dataset.status;
@@ -69,13 +67,11 @@ function onBtnStartGame(event) {
 }
 
 function onBtnNewGame() {
-
   if (btnStartGameRef.dataset.status === 'resume') {
     gameTimer.resume();
     funnyCubes.resume();
     pauseLayerRef.classList.add('invisible');
   }
-
 
   funnyCubes.startNewGame();
   gameTimer.start();
