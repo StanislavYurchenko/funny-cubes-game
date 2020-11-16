@@ -69,14 +69,12 @@ function onBtnStartGame(event) {
 }
 
 function onBtnNewGame() {
-  pauseLayerRef.classList.add('invisible');
 
-  console.log(btnStartGameRef.dataset.status);
   if (btnStartGameRef.dataset.status === 'resume') {
     gameTimer.resume();
     funnyCubes.resume();
+    pauseLayerRef.classList.add('invisible');
   }
-
 
   funnyCubes.startNewGame();
   gameTimer.start();
