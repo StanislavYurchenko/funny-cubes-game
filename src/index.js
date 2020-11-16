@@ -32,7 +32,7 @@ function toggleButtonStatus(event) {
   }
 }
 
-function setToStartButtonStatus(buttonRef) {
+function setToPauseButtonStatus(buttonRef) {
   buttonRef.innerHTML = 'Pause';
   buttonRef.dataset.status = 'pause';
 }
@@ -65,7 +65,7 @@ function onBtnNewGame() {
   pauseLayerRef.classList.add('invisible');
   funnyCubes.startNewGame();
   gameTimer.start();
-  setToStartButtonStatus(btnStartGameRef);
+  setToPauseButtonStatus(btnStartGameRef);
 }
 
 function gameOver() {
