@@ -76,6 +76,7 @@ function onBtnNewGame() {
     pauseLayerRef.classList.add('invisible');
   }
 
+
   funnyCubes.startNewGame();
   gameTimer.start();
   setToPauseButtonStatus(btnStartGameRef);
