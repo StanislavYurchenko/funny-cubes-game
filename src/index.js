@@ -32,10 +32,17 @@ function toggleButtonStatus(event) {
   }
 }
 
+function setToStartButtonStatus(buttonRef) {
+  buttonRef.innerHTML = 'Start';
+  buttonRef.dataset.status = 'start';
+}
+
 function setToPauseButtonStatus(buttonRef) {
   buttonRef.innerHTML = 'Pause';
   buttonRef.dataset.status = 'pause';
 }
+
+
 
 function onBtnStartGame(event) {
   const buttonRef = event.currentTarget;
@@ -63,6 +70,14 @@ function onBtnStartGame(event) {
 
 function onBtnNewGame() {
   pauseLayerRef.classList.add('invisible');
+
+  console.log(btnStartGameRef.dataset.status);
+  if (btnStartGameRef.dataset.status === 'resume') {
+    gameTimer.resume();
+    funnyCubes.resume();
+  }
+
+
   funnyCubes.startNewGame();
   gameTimer.start();
   setToPauseButtonStatus(btnStartGameRef);
