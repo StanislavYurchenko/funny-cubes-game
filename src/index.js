@@ -33,8 +33,8 @@ function toggleButtonStatus(event) {
 }
 
 function setToStartButtonStatus(buttonRef) {
-  buttonRef.innerHTML = 'Start';
-  buttonRef.dataset.status = 'start';
+  buttonRef.innerHTML = 'Pause';
+  buttonRef.dataset.status = 'pause';
 }
 
 function onBtnStartGame(event) {
