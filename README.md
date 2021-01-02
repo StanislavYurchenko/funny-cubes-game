@@ -5,7 +5,7 @@
 Collect the maximum number of cubes in a limited time by removing colored cubes from the playing
 field.
 
-### rules of the game:
+### Rules of the game:
 
 - You get 2 points for the green square.
 - You get 1 point for the yellow square.
