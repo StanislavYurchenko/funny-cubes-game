@@ -16,6 +16,9 @@ field.
 
 ### User instructions:
 
+- download project
+- start web-server in the command line: "npm start" in the directory ".../funny-cubes-game/backend"
+- open in the address bar your browser [https://localhost:3000](https://localhost:3000)
 - enjoy
 - give us high five and some good feedback
 
