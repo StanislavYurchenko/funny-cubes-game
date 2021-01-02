@@ -1,0 +1,17 @@
+[
+  {
+    "name": "kiwi",
+    "score": 100,
+    "position": 1
+  },
+  {
+    "name": "mango",
+    "score": 55,
+    "position": 2
+  },
+  {
+    "name": "poly",
+    "score": 20,
+    "position": 3
+  }  
+]
