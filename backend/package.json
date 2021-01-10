@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon ./index.js localhost 8080"
   },
   "author": "Yurchenko Stas <yurchenko.stanislav@ukr.net>",
@@ -14,5 +14,11 @@
     "express": "^4.17.1",
     "nodemon": "^2.0.6",
     "static-server": "^2.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "got": "^11.8.1",
+    "http-error": "0.0.6",
+    "jest": "^26.6.3"
   }
 }
