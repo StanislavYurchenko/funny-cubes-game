@@ -1,15 +1,17 @@
-const { assert } = require('chai');
-const fixtures = require('../../api/fixtures/fixtures4-arraySort.js');
-const gotPost = require('../gotPost.js');
+const fixturesPositive = require('../fixtures/fixtures4-positive-arraySort.js');
+const fixturesNegative = require('../fixtures/fixtures4-negative-arraySort.js');
+const test = require('../test.js');
 
-describe("route 'test/post'/. Positive.", () => {
-  fixtures.forEach(({ name, input, expected }) => {
-    it(name, async () => {
-      const options = { json: { arr1: input.arr1, arr2: input.arr2 } };
+test(
+  'Route: "api/tasks/arraySort". Positive.',
+  fixturesPositive,
+  'api/tasks/arraySort',
+  'deepEqual',
+);
 
-      const body = await gotPost('api/tasks/arraySort', options);
-
-      assert.deepEqual(body.result, expected.output, body?.message);
-    });
-  });
-});
+test(
+  'Route: "api/tasks/arraySort". Negative.',
+  fixturesNegative,
+  'api/tasks/arraySort',
+  'deepEqual',
+);

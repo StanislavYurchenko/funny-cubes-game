@@ -1,15 +1,7 @@
-const { assert } = require('chai');
-const fixtures = require('../../api/fixtures/fixtures2-palindrome.js');
-const gotPost = require('../gotPost.js');
+const fixturesPositive = require('../fixtures/fixtures2-positive-palindrome.js');
+const fixturesNegative = require('../fixtures/fixtures2-negative-palindrome.js');
+const test = require('../test.js');
 
-describe("route 'test/post'/. Positive.", () => {
-  fixtures.forEach(({ name, input, expected }) => {
-    it(name, async () => {
-      const options = { json: { input } };
+test('Route: "api/tasks/palindrome". Positive.', fixturesPositive, 'api/tasks/palindrome');
 
-      const body = await gotPost('api/tasks/palindrome', options);
-
-      assert.equal(body.result, expected.output, body?.message);
-    });
-  });
-});
+test('Route: "api/tasks/palindrome". Negative.', fixturesNegative, 'api/tasks/palindrome');

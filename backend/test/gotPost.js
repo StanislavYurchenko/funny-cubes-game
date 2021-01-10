@@ -9,7 +9,9 @@ const defaultOptions = {
 module.exports = async function (url, newOptions) {
   const options = { ...defaultOptions, ...newOptions };
 
-  const body = await got.post(url, options);
-
-  return body;
+  try {
+    return await got.post(url, options);
+  } catch (error) {
+    return error?.response?.body ?? { body: error.message };
+  }
 };

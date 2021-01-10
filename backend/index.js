@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const fs = require('fs');
 const createError = require('http-errors');
-// require('./api/api-tasks.js')
+
+const routeCallback = require('./api/routeCallback');
 
 const roman = require('./api/tasks/task1-roman.js');
 const palindrome = require('./api/tasks/task2-palindrome.js');
@@ -70,45 +71,26 @@ app.post('/results', jsonParser, (req, res) => {
 });
 
 // TASK 1
-app.post('/api/tasks/roman', jsonParser, (req, res, next) => {
-  if (!req.body) return res.sendStatus(400);
-
-  try {
-    const { input } = req.body;
-    const result = roman(input);
-    res.json({ result, message: 'ok' });
-  } catch (err) {
-    throw createError(400, err.message);
-  }
+app.post('/api/tasks/roman', jsonParser, (req, res) => {
+  routeCallback(req, res, roman);
 });
 
 // TASK 2
 app.post('/api/tasks/palindrome', jsonParser, (req, res) => {
-  if (!req.body) return res.sendStatus(400);
-
-  try {
-    const { input } = req.body;
-    const result = palindrome(input);
-    res.json({ result, message: 'ok' });
-  } catch (err) {
-    throw createError(400, err.message);
-  }
+  routeCallback(req, res, palindrome);
 });
 
 // TASK 3
 app.post('/api/tasks/brackets', jsonParser, (req, res) => {
-  if (!req.body) return res.sendStatus(400);
-
-  try {
-    const { input } = req.body;
-    const result = brackets(input);
-    res.json({ result, message: 'ok' });
-  } catch (err) {
-    throw createError(400, err.message);
-  }
+  routeCallback(req, res, brackets);
 });
 
 // TASK 4
+// TODO Может быть глюк, нужно переделать - Object.values - последовательность
+// app.post('/api/tasks/arraySort', jsonParser, (req, res) => {
+//   routeCallback(req, res, arraySort);
+// });
+
 app.post('/api/tasks/arraySort', jsonParser, (req, res) => {
   if (!req.body) return res.sendStatus(400);
 
@@ -136,10 +118,10 @@ app.post('/api/tasks/nextIndex', jsonParser, (req, res) => {
 
 //ERROR HANDLER
 app.use((error, req, res, next) => {
-  console.log('Error status: ', error.status);
-  console.log('Message: ', error.message);
-  // res.status(error.status); // 400
-  res.json({ message: error.message });
+  // console.log('Error status: ', error.status);
+  // console.log('Message: ', error.message);
+  res.status(error.status); // 400
+  res.json({ result: error.message });
 });
 
 // NOT FOUND

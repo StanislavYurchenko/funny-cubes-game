@@ -1,15 +1,7 @@
-const { assert } = require('chai');
-const fixtures = require('../../api/fixtures/fixtures3-brackets.js');
-const gotPost = require('../gotPost.js');
+const fixturesPositive = require('../fixtures/fixtures3-positive-brackets.js');
+const fixturesNegative = require('../fixtures/fixtures3-negative-brackets.js');
+const test = require('../test.js');
 
-describe("route 'test/post'/. Positive.", () => {
-  fixtures.forEach(({ name, input, expected }) => {
-    it(name, async () => {
-      const options = { json: { input } };
+test('Route: "api/tasks/brackets". Positive.', fixturesPositive, 'api/tasks/brackets');
 
-      const body = await gotPost('api/tasks/brackets', options);
-
-      assert.equal(body?.result, expected.output, body?.message);
-    });
-  });
-});
+test('Route: "api/tasks/brackets". Negative.', fixturesNegative, 'api/tasks/brackets');

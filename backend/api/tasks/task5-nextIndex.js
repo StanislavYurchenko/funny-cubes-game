@@ -1,11 +1,11 @@
-const validation = require("./argumentValidation.js");
+const validation = require('../argumentValidation.js');
 
 const options = {
   argumentType: 'arrayOfNumbersAndNumber',
-}
+};
 
 module.exports = function (nums, target) {
-  validation(options, ...arguments);  
+  validation(options, ...arguments);
 
   let resultIndex;
 
@@ -14,7 +14,7 @@ module.exports = function (nums, target) {
       resultIndex = index;
       return true;
     }
-  })
+  });
 
   return resultIndex ?? nums.length;
-}
+};
