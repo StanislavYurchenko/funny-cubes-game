@@ -1,21 +1,21 @@
-const validation = require("./argumentValidation.js");
+const validation = require('../argumentValidation.js');
 
-  const ROMAN_NUMBERS = {
-    'I': 1,
-    'V': 5,
-    'X': 10,
-    'L': 50,
-    'C': 100,
-    'D': 500,
-    'M': 1000
-}
-  
+const ROMAN_NUMBERS = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
+};
+
 const options = {
   argumentType: 'stringOfRomanNumbers',
-  romanNumbers: Object.keys(ROMAN_NUMBERS).join('')
-}
+  romanNumbers: Object.keys(ROMAN_NUMBERS).join(''),
+};
 
-module.exports = function(number) { 
+module.exports = function (number) {
   validation(options, ...arguments);
 
   return number
@@ -27,8 +27,6 @@ module.exports = function(number) {
 
       return currentValue >= nextValue || !nextValue
         ? accumulator + currentValue
-        : accumulator - currentValue   
-    }, 0)
-}
-
-
+        : accumulator - currentValue;
+    }, 0);
+};
