@@ -3,12 +3,18 @@ function stringOfRomanNumbers(options, args) {
   args.forEach(argument => {
     if (typeof argument !== 'string') {
       const errorMessage = `Type of "${typeof argument}" is invalid in the function argument! Available type: "string"`;
-      throw new RangeError(errorMessage);
+      throw new TypeError(errorMessage);
     }
 
     if (argument.search(regexp) === -1) {
       const errorMessage = `Invalid roman number "${argument}" in the function! Available symbols is "${options.romanNumbers}"`;
-      throw new RangeError(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    // Is D == 500? -  NO!!! It is EASTER EGG :)
+    if (argument === 'D') {
+      const errorMessage = 'Is D == 500? -  NO!!! It is EASTER EGG :)';
+      throw new Error(errorMessage);
     }
   });
 }
@@ -17,7 +23,7 @@ function stringOfBrackets(options, args) {
   args.forEach(argument => {
     if (typeof argument !== 'string') {
       const errorMessage = `Type of "${typeof argument}" is invalid in the function argument! Available type is "string"`;
-      throw new RangeError(errorMessage);
+      throw new TypeError(errorMessage);
     }
 
     const isBracket = argument
@@ -26,7 +32,7 @@ function stringOfBrackets(options, args) {
 
     if (!isBracket) {
       const errorMessage = `Invalid argument "${argument}" in the function! Available symbols is "${options.availableBrackets}"`;
-      throw new RangeError(errorMessage);
+      throw new Error(errorMessage);
     }
   });
 }

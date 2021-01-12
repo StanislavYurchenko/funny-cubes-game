@@ -80,47 +80,26 @@ app.post('/api/tasks/palindrome', jsonParser, (req, res) => {
   routeCallback(req, res, palindrome);
 });
 
-// TASK 3
+// // TASK 3
 app.post('/api/tasks/brackets', jsonParser, (req, res) => {
   routeCallback(req, res, brackets);
 });
 
 // TASK 4
-// TODO Может быть глюк, нужно переделать - Object.values - последовательность
-// app.post('/api/tasks/arraySort', jsonParser, (req, res) => {
-//   routeCallback(req, res, arraySort);
-// });
-
 app.post('/api/tasks/arraySort', jsonParser, (req, res) => {
-  if (!req.body) return res.sendStatus(400);
-
-  try {
-    const { arr1, arr2 } = req.body;
-    const result = arraySort(arr1, arr2);
-    res.json({ result, message: 'ok' });
-  } catch (err) {
-    throw createError(400, err.message);
-  }
+  routeCallback(req, res, arraySort, 'arr1&arr2');
 });
 
 // TASK 5
 app.post('/api/tasks/nextIndex', jsonParser, (req, res) => {
-  if (!req.body) return res.sendStatus(400);
-
-  try {
-    const { nums, target } = req.body;
-    const result = nextIndex(nums, target);
-    res.json({ result, message: 'ok' });
-  } catch (err) {
-    throw createError(400, err.message);
-  }
+  routeCallback(req, res, nextIndex, 'nums&target');
 });
 
 //ERROR HANDLER
 app.use((error, req, res, next) => {
-  // console.log('Error status: ', error.status);
-  // console.log('Message: ', error.message);
-  res.status(error.status); // 400
+  console.log('error');
+  console.log('status', error.status, error.message);
+  res.status(error.status); // 400, 500
   res.json({ result: error.message });
 });
 
