@@ -1,21 +1,32 @@
 const createError = require('http-errors');
 
-module.exports = (req, res, task) => {
-  if (!req.body) return res.sendStatus(400);
+module.exports = (req, res, task, argumentType = 'input') => {
+  const arguments = req?.body;
+  if (!arguments) return res.sendStatus(400);
 
   try {
-    // console.log('+++++++++++++++++++++++++++++');
-    // console.log(...Object.values(req?.body));
-    // console.log('-----------------------------');
-    const result = task(req?.body?.input);
-    // const result = task(...Object.values(req?.body));
+    let result;
+
+    switch (argumentType) {
+      case 'input':
+        result = task(arguments['input']);
+        break;
+
+      case 'arr1&arr2':
+        result = task(arguments['arr1'], arguments['arr2']);
+        break;
+
+      case 'nums&target':
+        result = task(arguments['nums'], arguments['target']);
+        break;
+    }
 
     res.json({ result });
   } catch (error) {
-    if (error.status >= 500 && error.status < 600) {
+    if (error.message.includes('EASTER EGG')) {
       throw createError(500, error.message);
-    } else {
-      throw createError(400, error.message);
     }
+
+    throw createError(400, error.message);
   }
 };
