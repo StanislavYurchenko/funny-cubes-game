@@ -8,30 +8,30 @@ export default class HallOfFame {
   }
 
   init(callback) {
-    fetch('http://localhost:3000/results')
+    fetch('http://localhost:9090/results')
       .then(res => res.json())
       .then(res => {
-       this.ratingList.push(...res);
-       callback();
+        this.ratingList.push(...res);
+        callback();
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error));
   }
 
   addMember(member, callback) {
     const initPost = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(member)
-    }
-    
-    fetch('http://localhost:3000/results', initPost)
+      body: JSON.stringify(member),
+    };
+
+    fetch('http://localhost:9090/results', initPost)
       .then(res => res.json())
       .then(res => {
         this.ratingList.splice(0, this.ratingList.length, ...res);
         callback();
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error));
   }
 }

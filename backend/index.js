@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const fs = require('fs');
-const createError = require('http-errors');
+var path = require('path');
+var cookieParser = require('cookie-parser');
 
 const routeCallback = require('./api/routeCallback');
 
@@ -15,11 +16,53 @@ const nextIndex = require('./api/tasks/task5-nextIndex.js');
 const app = express();
 const port = 9090;
 
-// STATIC SERVER
-// app.use(serveStatic('../frontend/build', { 'index': ['index.html'] }))
-app.use(serveStatic('../backend/static', { index: ['index.html'] }));
-
 const jsonParser = bodyParser.json();
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const cookieSession = require('cookie-session');
+
+const user = {
+  name: 'Poly',
+  email: 'poly@gmail.com',
+  password: '12345678',
+  login: 'yes',
+};
+
+const isAuth = (req, res) => {
+  // fs.readFile('./data/users.json', 'utf8', (error, rawData) => {
+  //   if (error) throw error;
+
+  //   const users = [...JSON.parse(rawData)];
+
+  //   users.some(user => {
+  //     if (requestUserName === user.name && requestUserPassword === user.password) {
+  //       res.locals.authenticated = true;
+  //       return true;
+  //     }
+  //   });
+  // });
+
+  // return;
+
+  return (
+    req.cookies.isAuth === 'yes' ||
+    (req?.body?.name === user.name && req?.body?.password === user.password)
+  );
+};
+
+app.use(cookieParser());
+
+// ROOT
+app.get('/', (req, res) => {
+  if (isAuth(req, res)) {
+    res.redirect('/game');
+  } else {
+    res.redirect('/login');
+  }
+});
+
+// STATIC SERVER
+// app.use(serveStatic('../frontend/build', { index: ['index.html'] }));
+app.use(serveStatic('../backend/static', { index: ['login.html'] }));
 
 // HEADERS
 app.use((req, res, next) => {
@@ -33,41 +76,103 @@ app.use((req, res, next) => {
   next();
 });
 
+// LOGOUT
+app.get('/logout', (req, res) => {
+  res.clearCookie('isAuth');
+  res.redirect('/');
+});
+
+// LOGIN
+app.get('/login', (req, res) => {
+  if (isAuth(req, res)) {
+    res.redirect('/game');
+  } else {
+    res.type('.html');
+    res.sendFile(path.join(__dirname, 'static/login.html'));
+  }
+});
+
+// LOGIN
+app.post('/login', urlencodedParser, (req, res) => {
+  if (isAuth(req, res)) {
+    res.cookie('isAuth', 'yes', {
+      expires: new Date(Date.now() + 12 * 3600000),
+      httpOnly: true,
+    });
+    res.redirect('/game');
+  } else {
+    res.redirect('/login-error');
+  }
+});
+
+// LOGIN ERROR
+app.post('/login-error', urlencodedParser, (req, res) => {
+  res.redirect('/login');
+});
+
+// LOGIN ERROR
+app.get('/login-error', urlencodedParser, (req, res) => {
+  if (isAuth(req, res)) {
+    res.redirect('/game');
+  } else {
+    res.type('.html');
+    res.sendFile(path.join(__dirname, 'static/loginError.html'));
+  }
+});
+
+// GAME
+app.get('/game', (req, res) => {
+  if (isAuth(req, res)) {
+    res.type('.html');
+    res.sendFile(path.join(__dirname, 'static/index.html'));
+  } else {
+    res.redirect('/');
+  }
+});
+
 // GET GAME RESULT
 app.get('/results', (req, res) => {
-  fs.readFile('./data/ratingList.json', 'utf8', (error, rawData) => {
-    if (error) throw error;
+  if (isAuth(req, res)) {
+    fs.readFile('./data/ratingList.json', 'utf8', (error, rawData) => {
+      if (error) throw error;
 
-    const ratingList = [...JSON.parse(rawData)];
-    const bestTenResult = ratingList.slice(0, 10);
+      const ratingList = [...JSON.parse(rawData)];
+      const bestTenResult = ratingList.slice(0, 10);
 
-    res.json(bestTenResult);
-  });
+      res.json(bestTenResult);
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 // POST GAME RESULT
 app.post('/results', jsonParser, (req, res) => {
   if (!req.body) return res.sendStatus(400);
 
-  let { name, score } = req.body;
+  if (isAuth(req, res)) {
+    let { name, score } = req.body;
 
-  fs.readFile('./data/ratingList.json', 'utf8', (error, rawData) => {
-    if (error) throw error;
+    fs.readFile('./data/ratingList.json', 'utf8', (error, rawData) => {
+      if (error) throw error;
 
-    const ratingList = [...JSON.parse(rawData)];
+      const ratingList = [...JSON.parse(rawData)];
 
-    ratingList.push({ name, score, position: null });
-    ratingList
-      .sort((prev, next) => next.score - prev.score)
-      .forEach((member, index) => (member.position = index + 1));
+      ratingList.push({ name, score, position: null });
+      ratingList
+        .sort((prev, next) => next.score - prev.score)
+        .forEach((member, index) => (member.position = index + 1));
 
-    const bestTenResult = ratingList.slice(0, 10);
+      const bestTenResult = ratingList.slice(0, 10);
 
-    fs.writeFile('./data/ratingList.json', JSON.stringify(ratingList, null, 2), err => {
-      if (err) throw err;
-      res.json(bestTenResult);
+      fs.writeFile('./data/ratingList.json', JSON.stringify(ratingList, null, 2), err => {
+        if (err) throw err;
+        res.json(bestTenResult);
+      });
     });
-  });
+  } else {
+    res.redirect('/');
+  }
 });
 
 // TASK 1
@@ -80,7 +185,7 @@ app.post('/api/tasks/palindrome', jsonParser, (req, res) => {
   routeCallback(req, res, palindrome);
 });
 
-// // TASK 3
+// TASK 3
 app.post('/api/tasks/brackets', jsonParser, (req, res) => {
   routeCallback(req, res, brackets);
 });

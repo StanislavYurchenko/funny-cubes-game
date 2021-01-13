@@ -6,8 +6,8 @@ import Timer from './components/Timer/Timer';
 import HallOfFame from './components/HallOfFame/HallOfFame';
 import RenderHallOfFame from './components/RenderHallOfFame/RenderHallOfFame';
 
-// const gameDuration = 60000; //ms
-const gameDuration = 4000; //ms
+const gameDuration = 60000; //ms
+// const gameDuration = 4000; //ms
 
 const btnStartGameRef = document.querySelector('.js-start');
 const btnNewGameRef = document.querySelector('.js-new-game');
@@ -105,7 +105,7 @@ function onFormAddToHallOfFame(event) {
 }
 
 function cbRenderHallOfFame(result) {
-  RenderHallOfFame('.js-hall-of-fame', hallOfFame.ratingList, result)
+  RenderHallOfFame('.js-hall-of-fame', hallOfFame.ratingList, result);
 }
 
 btnStartGameRef.addEventListener('click', onBtnStartGame);
@@ -115,5 +115,3 @@ formAddToHallOfFameRef.addEventListener('submit', onFormAddToHallOfFame);
 funnyCubes.init();
 gameTimer.init();
 hallOfFame.init(cbRenderHallOfFame);
-
-
