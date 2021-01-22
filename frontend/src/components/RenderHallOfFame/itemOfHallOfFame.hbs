@@ -1,7 +1,22 @@
-{{#each this}}
-  <tr>
-    <th class="p-1 text-center" scope="row">{{position}}</th>
-    <td class="p-1 text-center text-break">{{name}}</td>
-    <td class="p-1 text-center">{{score}}</td>
-  </tr>
-{{/each}}
+<h4 class="text-center">Hall of fame</h4>
+<p class="p-1 text-center text-primary font-weight-bold text-break">Hello {{currentUser.login}}!</p>
+<p class="p-1 text-center text-primary font-weight-bold text-break">Your best result is: {{currentUser.bestResult}}!</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class="p-2 text-center" scope="col">#</th>
+      <th class="p-2 text-center" scope="col">Login</th>
+      <th class="p-2 text-center" scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody class="tbody">
+    {{#each this.ratingList}}
+      <tr>
+        <th class="p-1 text-center" scope="row">{{position}}</th>
+        <td class="p-1 text-center text-break">{{login}}</td>
+        <td class="p-1 text-center">{{score}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

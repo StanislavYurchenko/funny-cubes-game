@@ -1,0 +1,56 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")/
+    meta(name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no")/
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")/
+    title Funny square game
+    style
+      include ../static/main.0.css
+
+  body(class="body vh-100 d-flex")
+    div(class="container align-self-center")
+      div(class="row")
+        div(class="col-12 col-xl-10 mx-auto p-2 card border-primary")
+          h1(class="text-center text-uppercase") FUNNY SQUARE GAME
+          p(class="text-center text-uppercase") Administration page
+      div(class="row")
+        div(class="col-12 col-xl-10 mx-auto p-2 card border-primary")
+          form(action="/game" class="mx-auto")
+            button(type="submit" class="btn btn-primary rounded-pill text-break d-block mx-auto") back
+      div(class="row")
+        div(class="col-12 col-xl-10 mx-auto p-2 card border-primary")
+          table(class="table")
+            thead
+              tr
+                th(class="p-2 text-center" scope="col") ID
+                th(class="p-2 text-center" scope="col") Login
+                th(class="p-2 text-center" scope="col") Name
+                th(class="p-2 text-center" scope="col") Reg IP
+                th(class="p-2 text-center" scope="col") Reg Date
+                th(class="p-2 text-center" scope="col") Role
+                th(class="p-2 text-center" scope="col") Best result
+                th(class="p-2 text-center" scope="col") Total game
+            tbody(class="tbody")
+              each value in userList
+                tr
+                  td(class="p-1 text-center" scope="row") #{value._id}
+                  td(class="p-1 text-center text-break") #{value.login}
+                  td(class="p-1 text-center") #{value.name}
+                  td(class="p-1 text-center") #{value.ip}
+                  td(class="p-1 text-center text-break") #{value.registrationData}
+                  td(class="p-1 text-center") #{value.role}
+                  td(class="p-1 text-center") #{value.bestResult}
+                  td(class="p-1 text-center") #{value.totalGames}
+      div(class="row")       
+        form(action="/game" class="mx-auto col-6 col-xl-5 mx-auto p-2 ")
+          button(type="submit" class="btn btn-primary rounded-pill text-break d-block mx-auto") prev
+        form(action="/game" class="mx-auto col-6 col-xl-5 mx-auto p-2 ")
+          button(type="submit" class="btn btn-primary rounded-pill text-break d-block mx-auto") prev
+      div(class="row")
+        div(class="mx-auto col-5 col-xl-4 mx-auto p-2")
+          a(href="/admin?page=" + (Number(page) - 1) class="btn btn-primary rounded-pill text-break d-block mx-auto") minus one
+        div(class="mx-auto col-2 col-xl-2 mx-auto p-2 d-flex justify-content-center align-items-center")  
+          p(class="mx-auto p-2") --- #{page} ---
+        div(class="mx-auto col-5 col-xl-4 mx-auto p-2")  
+          a(href="/admin?page=" + (Number(page) + 1)  class="btn btn-primary rounded-pill text-break d-block mx-auto") plus one

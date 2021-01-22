@@ -6,8 +6,8 @@ import Timer from './components/Timer/Timer';
 import HallOfFame from './components/HallOfFame/HallOfFame';
 import RenderHallOfFame from './components/RenderHallOfFame/RenderHallOfFame';
 
-const gameDuration = 60000; //ms
-// const gameDuration = 4000; //ms
+// const gameDuration = 60000; //ms
+const gameDuration = 4000; //ms
 
 const btnStartGameRef = document.querySelector('.js-start');
 const btnNewGameRef = document.querySelector('.js-new-game');
@@ -94,18 +94,18 @@ function timeOver() {
 function onFormAddToHallOfFame(event) {
   event.preventDefault();
   const form = event.currentTarget;
-  const result = {
-    name: form.elements.name.value,
+  const lastResult = {
+    login: hallOfFame.currentUser.login,
     score: funnyCubes.score,
   };
-  hallOfFame.addMember(result, () => cbRenderHallOfFame(result));
-
+  hallOfFame.addMember(lastResult, () => {});
+  hallOfFame.getResults(() => cbRenderHallOfFame(lastResult));
   form.reset();
   $('.js-result-modal').modal('hide');
 }
 
-function cbRenderHallOfFame(result) {
-  RenderHallOfFame('.js-hall-of-fame', hallOfFame.ratingList, result);
+function cbRenderHallOfFame(lastResult) {
+  RenderHallOfFame('.js-hall-of-fame', hallOfFame, lastResult);
 }
 
 btnStartGameRef.addEventListener('click', onBtnStartGame);

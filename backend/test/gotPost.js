@@ -3,7 +3,7 @@ const got = require('got');
 const defaultOptions = {
   responseType: 'json',
   throwHttpErrors: false,
-  prefixUrl: 'http://localHost:9090',
+  prefixUrl: 'http://localhost:9090',
 };
 
 module.exports = async function (url, newOptions) {

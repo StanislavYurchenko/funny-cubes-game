@@ -1,0 +1,47 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")/
+    meta(name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no")/
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")/
+    title Funny square game
+    style
+      include ../static/main.0.css
+
+  body(class="body vh-100 d-flex")
+    div(class="container align-self-center")
+      div(class="row")
+        div(class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto p-3 card border-primary")
+          h1(class="text-center text-uppercase") FUNNY SQUARE GAME
+      div(class="row")
+        div(class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto p-5 card border-primary")
+          form(class="" action="/login" method="post")
+            div(class="form-group")
+              label(for="login") Login
+              input(
+                type="text" 
+                class="form-control" 
+                id="login" 
+                aria-describedby="loginHelp" 
+                name="login" 
+                value="stas"
+                pattern ="[a-z0-9]{1,32}"
+                required
+                )/
+              small(id="loginHelp" class="form-text text-muted") We'll never share your Login with anyone else.
+            div(class="form-group")
+              label(for="password") Password
+              input(
+                type="password" 
+                class="form-control" 
+                id="password" 
+                name="password" 
+                value="zzzzzzzz"
+                minlength="8"
+                required
+                )/
+            button(type="submit" class="btn btn-primary mx-auto") Login
+      div(class="row")
+        div(class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto p-5 card border-primary")
+          a(href="./registration" class="btn btn-primary mx-auto") Registration
+        

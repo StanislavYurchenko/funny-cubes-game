@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")/
+    meta(name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no")/
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")/
+    title Funny square game
+    style
+      include ../static/main.0.css
+      
+  body
+    body(class="body vh-100 d-flex")
+      div(class="container align-self-center")
+        div(class="row")
+          div(class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 p-5 mx-auto card border-danger")
+            div(class="mb-5") #{message}
+            form(action="" + backRoute class="mx-auto")
+              button(type="submit" class="btn btn-primary rounded-pill text-break d-block mx-auto") Try again
