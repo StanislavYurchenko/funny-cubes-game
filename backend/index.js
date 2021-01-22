@@ -50,7 +50,7 @@ mongoClient.connect((err, client) => {
   const results = db.collection('results');
   users.createIndex({ login: 1 }, { unique: true });
 
-  const isAuth = (req, res) => {
+  const isAuth = req => {
     // return true;
     return req.session?.isAuth;
   };
@@ -88,7 +88,6 @@ mongoClient.connect((err, client) => {
 
   // STATIC SERVER
   app.use(serveStatic('../backend/static', { index: ['login.html'] }));
-  // app.use(serveStatic('../frontend/static', { index: ['login.html'] }));
 
   // HEADERS
   app.use((req, res, next) => {
@@ -183,7 +182,7 @@ mongoClient.connect((err, client) => {
         password: req.body?.password,
         ip: req.ip,
         registrationData: new Date().toString(),
-        role: 'user',
+        role: 'gamer',
         totalGames: 0,
         bestResult: 0,
       };
@@ -241,25 +240,18 @@ mongoClient.connect((err, client) => {
 
   // GET ADMIN PAGE
   app.get('/admin', async (req, res) => {
-    // if (isAuth(req, res)) {
-    if (true) {
+    if (isAuth(req, res)) {
       res.type('.html');
-      console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
 
-      console.log(req.query?.page);
-      const page = req.query?.page ?? 1;
-      // if (pageAction === 'plus') page = page + 1;
-      // if (pageAction === 'minus') page = page - 1;
+      const USER_PER_PAGE = 5;
+      const page = Number(req.query?.page ?? req.session.adminPage ?? 1);
+      const totalUsers = await users.countDocuments();
+      const totalPages = Math.ceil(totalUsers / USER_PER_PAGE);
+      let skip = USER_PER_PAGE * (page - 1);
 
-      const limit = 5;
-      let skip = limit * (page - 1);
+      const userList = await users.find().skip(skip).limit(USER_PER_PAGE).toArray();
 
-      console.log('skip', skip);
-      console.log('limit', limit);
-      console.log('page', page);
-      const userList = await users.find().skip(skip).limit(limit).toArray();
-
-      res.send(adminTemplate({ userList, page }));
+      res.send(adminTemplate({ userList, page, totalPages }));
     } else {
       res.redirect('/');
     }
@@ -268,14 +260,22 @@ mongoClient.connect((err, client) => {
   });
 
   // POST ADMIN PAGE
-  // app.post('/admin', jsonParser, (req, res) => {
-  //   if (!req.body) return res.sendStatus(400);
+  app.post('/admin', urlencodedParser, async (req, res) => {
+    if (!req.body) return res.sendStatus(400);
 
-  //   if (isAuth(req, res)) {
-  //   } else {
-  //     res.redirect('/');
-  //   }
-  // });
+    if (isAuth(req, res)) {
+      req.session.adminPage = req.query.page;
+      const userRole = req.body.role;
+      const selectedUser = req.query?.login;
+
+      try {
+        await users.updateOne({ login: selectedUser }, { $set: { role: userRole } }, {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    res.redirect('/admin');
+  });
 
   // POST GAME RESULT
   app.post('/results', jsonParser, async (req, res) => {
@@ -367,8 +367,6 @@ mongoClient.connect((err, client) => {
 
   //ERROR HANDLER
   app.use((error, req, res, next) => {
-    console.log('error');
-    console.log('status', error.status, error.message);
     res.status(error.status); // 400, 500
     res.json({ result: error.message });
   });
