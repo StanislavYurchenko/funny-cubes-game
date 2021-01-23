@@ -17,8 +17,12 @@ field.
 ### User instructions:
 
 - download project
+- instal "docker desktop"
+  [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
+- start docker with MongoDB in the command line: "docker-compose up" in the directory
+  ".../funny-cubes-game"
 - start web-server in the command line: "npm start" in the directory ".../funny-cubes-game/backend"
-- open in the address bar your browser [https://localhost:3000](https://localhost:3000)
+- open in the address bar your browser [https://localhost:9090](https://localhost:9090)
 - enjoy
 - give us high five and some good feedback
 
@@ -27,15 +31,25 @@ field.
 - HTML5
 - CSS3
 - SCSS
-- vanilla JS
+- Vanilla JS
 - WEBPACK
 - NPM
+- DOCKER
+- MongoDB
+- NodeJS
 
 ### Packages:
 
 - bootstrap
 - jquery
 - handlebars
+- express
+- express-session
+- got
+- mongodb
+- pug
+- static-server
+- ...
 
 ### Architect:
 

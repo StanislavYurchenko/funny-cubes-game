@@ -18,20 +18,23 @@
               <button
                 type="button"
                 data-status="start"
-                class="btn btn-primary rounded-pill text-break mr-2 js-start"
+                class="btn btn-primary rounded-pill text-break mr-1 js-start"
               >
                 Start
               </button>
               <button
                 type="button"
-                class="btn btn-primary rounded-pill text-break js-new-game mr-5"
+                class="btn btn-primary rounded-pill text-break js-new-game mr-2"
               >
                 New game
               </button>
-              <form action="/logout">
+              <form action="/logout" class="mr-2">
                 <button type="submit" class="btn btn-primary rounded-pill text-break">
                   Logout
                 </button>
+              </form>
+              <form action="/admin">
+                <button type="submit" class="btn btn-primary rounded-pill text-break">Admin</button>
               </form>
             </div>
             <div class="d-flex m-0 align-self-center flex-nowrap">
@@ -59,7 +62,7 @@
             Pause
           </div>
         </div>
-        <div class="col-4 p-2 d-none d-md-block">
+        <div class="col-4 p-2 d-none d-md-block js-hall-of-fame">
           <h4 class="text-center">Hall of fame</h4>
 
           <table class="table">
@@ -70,7 +73,7 @@
                 <th class="p-2 text-center" scope="col">Score</th>
               </tr>
             </thead>
-            <tbody class="js-hall-of-fame">
+            <tbody class="tbody">
               <tr>
                 <th class="p-1 text-center" scope="row">1</th>
                 <td class="p-1 text-center text-break">you first</td>
@@ -150,15 +153,6 @@
             </div>
 
             <form class="mb-5 js-add-result">
-              <input
-                type="text"
-                class="form-control mb-3"
-                name="name"
-                maxlength="15"
-                minlength="2"
-                required
-                placeholder="Nick name"
-              />
               <button type="submit" class="btn btn-primary mb-2">
                 Add your name to hall of fame
               </button>

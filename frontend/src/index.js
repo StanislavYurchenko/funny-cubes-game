@@ -94,18 +94,18 @@ function timeOver() {
 function onFormAddToHallOfFame(event) {
   event.preventDefault();
   const form = event.currentTarget;
-  const result = {
-    name: form.elements.name.value,
+  const lastResult = {
+    login: hallOfFame.currentUser.login,
     score: funnyCubes.score,
   };
-  hallOfFame.addMember(result, () => cbRenderHallOfFame(result));
-
+  hallOfFame.addMember(lastResult, () => {});
+  hallOfFame.getResults(() => cbRenderHallOfFame(lastResult));
   form.reset();
   $('.js-result-modal').modal('hide');
 }
 
-function cbRenderHallOfFame(result) {
-  RenderHallOfFame('.js-hall-of-fame', hallOfFame.ratingList, result);
+function cbRenderHallOfFame(lastResult) {
+  RenderHallOfFame('.js-hall-of-fame', hallOfFame, lastResult);
 }
 
 btnStartGameRef.addEventListener('click', onBtnStartGame);

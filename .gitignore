@@ -1,6 +1,9 @@
 # production
 /build
 
+# MongoDB - data
+# /data
+
 # Logs
 logs
 *.log
