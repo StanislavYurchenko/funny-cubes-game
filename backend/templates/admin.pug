@@ -12,43 +12,36 @@ body(class="body vh-100 d-flex")
           button(type="submit" class="btn btn-primary rounded-pill text-break d-block mx-auto") back
     div(class="row")
       div(class="col-12 col-xl-10 mx-auto p-2 card border-primary")
-        table(class="table")
+        table(class="table m-0")
           thead
             tr
               th(class="p-2 text-center" scope="col") ID
               th(class="p-2 text-center" scope="col") Login
-              th(class="p-2 text-center" scope="col") Name
-              th(class="p-2 text-center" scope="col") Reg IP
-              th(class="p-2 text-center" scope="col") Reg Date
+              th(class="p-2 text-center d-none d-sm-table-cell" scope="col") Name
+              th(class="p-2 text-center d-none d-sm-table-cell" scope="col") IP
+              th(class="p-2 text-center d-none d-md-table-cell" scope="col") Date
               th(class="p-2 text-center" scope="col") Role
-              th(class="p-2 text-center" scope="col") Best result
-              th(class="p-2 text-center" scope="col") Total game
+              th(class="p-2 text-center d-none d-md-table-cell" scope="col") Games/Best
           tbody(class="tbody")
             each value in userList
               tr
-                td(class="p-1 text-center" scope="row") #{value._id}
-                td(class="p-1 text-center text-break") #{value.login}
-                td(class="p-1 text-center") #{value.name}
-                td(class="p-1 text-center") #{value.ip}
-                td(class="p-1 text-center text-break") #{value.registrationData}
-                td(class="p-1 text-center") #{value.role}
-                  form(action="/admin?login=" + value.login + "&page=" + page  method="post" class="mx-auto" id="roleSelect")
-                    div(class="form-group")
-                      select(class="form-control" name="role"  )
+                td(class="p-1 text-center py-3 text-break" scope="row") #{value._id}
+                td(class="p-1 text-center py-3 text-break") #{value.login}
+                td(class="p-1 text-center py-3 text-break d-none d-sm-table-cell" ) #{value.name}
+                td(class="p-1 text-center py-3 text-break d-none d-sm-table-cell") #{value.ip}
+                td(class="p-1 text-center py-3 text-break d-none d-md-table-cell") #{value.registrationData}
+                td(class="p-1 text-center")
+                  form(action="/admin?login=" + value.login + "&page=" + page  method="post" class="mx-auto d-flex justify-content-center align-items-center " id="roleSelect")
+                    div(class="form-group m-1")
+                      select(class="form-control p-0" name="role"  )
                         option(value="gamer" selected = (value.role === "gamer"))  gamer
                         option(value="admin" selected = (value.role === "admin"))  admin
-                    button(type="submit" class="btn btn-primary rounded-pill text-break d-block mx-auto") ok    
-                td(class="p-1 text-center") #{value.bestResult}
-                td(class="p-1 text-center") #{value.totalGames}
+                    button(type="submit" class="btn btn-primary rounded-pill d-block mx-auto") ok    
+                td(class="p-1 text-center py-3 text-break d-none d-md-table-cell") #{value.totalGames} / #{value.bestResult}
     div(class="row")
       div(class="mx-auto col-3 col-xl-2 mx-auto p-2")
         a(href="/admin?page=" + (page - 1 < 1 ? totalPages : page - 1) class="btn btn-primary rounded-pill text-break d-block mx-auto") prev
-      div(class="mx-auto col-2 col-xl-2 mx-auto p-2 d-flex justify-content-center align-items-center")  
+      div(class="mx-auto col-4 col-xl-3 mx-auto p-2 d-flex justify-content-center align-items-center")  
         p(class="mx-auto p-2") --- #{page} ---
       div(class="mx-auto col-3 col-xl-2 mx-auto p-2")  
         a(href="/admin?page=" + (page + 1 > totalPages ? 1 : page + 1)  class="btn btn-primary rounded-pill text-break d-block mx-auto") next
-  script(type="text/javascript").
-    const ref = document.querySelector("#roleSelect")
-    console.log(ref)
-    ref.addEventListener("submit", (e)=>console.log(e))
-    console.log('TEST');
