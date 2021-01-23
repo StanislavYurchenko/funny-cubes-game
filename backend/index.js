@@ -213,6 +213,7 @@ mongoClient.connect((err, client) => {
   app.get('/admin', async (req, res) => {
     if (!isAuth(req)) return res.redirect('/');
     if (!isAdmin(req)) {
+      console.log('test');
       req.session.backRoute = '/game';
       req.session.errorMessage = 'You do not have enough rights, contact the administrator';
       res.redirect('/error-page');
@@ -307,7 +308,6 @@ mongoClient.connect((err, client) => {
 
   // ERROR-PAGE
   app.use('/error-page', async (req, res) => {
-    if (isAuth(req, res)) return res.redirect('/game');
     res.type('.html');
     const backRoute = req.session.backRoute ?? '/';
     const message = req.session.errorMessage ?? 'Operation canceled. Try again!';
