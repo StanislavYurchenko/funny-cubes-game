@@ -11,7 +11,7 @@ field.
 - You get 1 point for the yellow square.
 - You will lose 1 point per red square.
 - When you click on a green, yellow or red square, one, two or zero new cubes may appear.
-- The game ends after time is left or if all the spaces are filled with colored squares or colored
+- The game ends after time is up or if all the spaces are filled with colored squares or colored
   squares disappear completely.
 
 ### User instructions:
@@ -19,8 +19,9 @@ field.
 - download project
 - instal "docker desktop"
   [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
-- start docker with MongoDB in the command line: "docker-compose up" in the directory
+- start docker compose with MongoDB in the command line: "docker-compose up -d" in the directory
   ".../funny-cubes-game"
+- instal dependencies "npm install" in the directory ".../funny-cubes-game/backend"
 - start web-server in the command line: "npm start" in the directory ".../funny-cubes-game/backend"
 - open in the address bar your browser [https://localhost:9090](https://localhost:9090)
 - enjoy
