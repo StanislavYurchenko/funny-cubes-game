@@ -2,7 +2,7 @@
 /build
 
 # MongoDB - data
-# /data
+/data
 
 # Logs
 logs

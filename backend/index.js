@@ -20,8 +20,8 @@ const registrationTemplate = pug.compileFile('./templates/registration.pug');
 const adminTemplate = pug.compileFile('./templates/admin.pug');
 
 const MongoClient = require('mongodb').MongoClient;
-// const MONGO_DB_URL = "mongodb://mongo:27017/";
-const MONGO_DB_URL = 'mongodb://localhost:27017/';
+const MONGO_DB_URL = 'mongodb://mongo:27017/docker-node-mongo';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/';
 const mongoClient = new MongoClient(MONGO_DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -49,7 +49,6 @@ mongoClient.connect((err, client) => {
   users.createIndex({ login: 1 }, { unique: true });
 
   const isAuth = req => {
-    // return true;
     return req.session?.isAuth;
   };
 
@@ -93,7 +92,7 @@ mongoClient.connect((err, client) => {
   app.use(session(sessionParams));
 
   // STATIC SERVER
-  app.use(serveStatic('../backend/static', { index: ['login.html'] }));
+  app.use(serveStatic('./static', { index: false }));
 
   // HEADERS
   app.use((_, res, next) => {
