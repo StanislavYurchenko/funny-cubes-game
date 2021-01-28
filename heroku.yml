@@ -1,4 +1,4 @@
 build:
   docker:
-    web: backend/Dockerfile
     mongodb: mongodb/Dockerfile
+    web: backend/Dockerfile
