@@ -3,7 +3,7 @@ services:
   app:
     container_name: docker-node-mongo
     restart: always
-    build: ./backend
+    build: .
     ports:
       - '9090:9090'
     # links:
