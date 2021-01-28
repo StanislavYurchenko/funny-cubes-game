@@ -20,8 +20,8 @@ const registrationTemplate = pug.compileFile('./templates/registration.pug');
 const adminTemplate = pug.compileFile('./templates/admin.pug');
 
 const MongoClient = require('mongodb').MongoClient;
-const MONGO_DB_URL = 'mongodb://mongo:27017/docker-node-mongo';
-// const MONGO_DB_URL = 'mongodb://localhost:27017/';
+// const MONGO_DB_URL = 'mongodb://mongo:27017/docker-node-mongo';
+const MONGO_DB_URL = 'mongodb://localhost:27017/';
 const mongoClient = new MongoClient(MONGO_DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
