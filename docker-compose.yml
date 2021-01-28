@@ -1,9 +1,12 @@
 version: '3'
+volumes:
+  mongodb_volume:
+
 services:
   app:
     container_name: docker-node-mongo
     restart: always
-    build: .
+    build: ./backend
     ports:
       - '9090:9090'
     # links:
@@ -12,8 +15,11 @@ services:
       - mongo
   mongo:
     container_name: mongo
+    restart: always
     image: mongo
     # volumes:
     #   - ./data:/data/db
     ports:
       - '27017:27017'
+    volumes:
+      - mongodb_volume:/data/db
