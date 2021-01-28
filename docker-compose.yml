@@ -1,9 +1,9 @@
 version: '3'
-volumes:
-  mongodb_volume:
+# volumes:
+# mongodb_volume:
 
 services:
-  app:
+  web:
     container_name: docker-node-mongo
     restart: always
     build: ./backend
@@ -22,5 +22,5 @@ services:
     #   - ./data:/data/db
     ports:
       - '27017:27017'
-    volumes:
-      - mongodb_volume:/data/db
+    # volumes:
+    #   - mongodb_volume:/data/db
