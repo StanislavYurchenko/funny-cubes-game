@@ -1,17 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const pug = require('pug');
 
-// for tests
-const routeCallback = require('./api/routeCallback');
-const roman = require('./api/tasks/task1-roman.js');
-const palindrome = require('./api/tasks/task2-palindrome.js');
-const brackets = require('./api/tasks/task3-brackets.js');
-const arraySort = require('./api/tasks/task4-arraySort.js');
-const nextIndex = require('./api/tasks/task5-nextIndex.js');
+// ROUTES
+const resultsRouter = require('./routes/results');
+const apiRouter = require('./routes/api_tasks');
+const gameRouter = require('./routes/game');
 
 // TEMPLATES
 const errorTemplate = pug.compileFile('./templates/error.pug');
@@ -20,8 +16,8 @@ const registrationTemplate = pug.compileFile('./templates/registration.pug');
 const adminTemplate = pug.compileFile('./templates/admin.pug');
 
 const MongoClient = require('mongodb').MongoClient;
-// const MONGO_DB_URL = 'mongodb://mongo:27017/docker-node-mongo';
-const MONGO_DB_URL = 'mongodb://localhost:27017/';
+const MONGO_DB_URL = 'mongodb://mongo:27017/docker-node-mongo';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/';
 const mongoClient = new MongoClient(MONGO_DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -201,18 +197,13 @@ mongoClient.connect((err, client) => {
     }
   });
 
-  // GAME
-  app.get('/game', (req, res) => {
-    if (!isAuth(req)) return res.redirect('/');
-    res.type('.html');
-    res.sendFile(path.join(__dirname, 'static/index.html'));
-  });
+  // GAME ROUTES
+  app.use('/game', gameRouter);
 
   // GET ADMIN PAGE
   app.get('/admin', async (req, res) => {
     if (!isAuth(req)) return res.redirect('/');
     if (!isAdmin(req)) {
-      console.log('test');
       req.session.backRoute = '/game';
       req.session.errorMessage = 'You do not have enough rights, contact the administrator';
       res.redirect('/error-page');
@@ -249,6 +240,9 @@ mongoClient.connect((err, client) => {
     }
     res.redirect('/admin');
   });
+
+  // GAME RESULT ROUTES
+  // app.use('/results', resultsRouter);
 
   // POST GAME RESULT
   app.post('/results', jsonParser, async (req, res) => {
@@ -313,36 +307,8 @@ mongoClient.connect((err, client) => {
     res.send(errorTemplate({ message, backRoute }));
   });
 
-  // TESTS TASK 1
-  app.post('/api/tasks/roman', jsonParser, (req, res) => {
-    routeCallback(req, res, roman);
-  });
-
-  // TESTS TASK 2
-  app.post('/api/tasks/palindrome', jsonParser, (req, res) => {
-    routeCallback(req, res, palindrome);
-  });
-
-  // TESTS TASK 3
-  app.post('/api/tasks/brackets', jsonParser, (req, res) => {
-    routeCallback(req, res, brackets);
-  });
-
-  // TESTS TASK 4
-  app.post('/api/tasks/arraySort', jsonParser, (req, res) => {
-    routeCallback(req, res, arraySort, 'arr1&arr2');
-  });
-
-  // TESTS TASK 5
-  app.post('/api/tasks/nextIndex', jsonParser, (req, res) => {
-    routeCallback(req, res, nextIndex, 'nums&target');
-  });
-
-  // TESTS ERROR HANDLER
-  app.use((error, req, res, next) => {
-    res.status(error.status); // 400, 500
-    res.json({ result: error.message });
-  });
+  // API TASKS ROUTES
+  app.use('/api/tasks', apiRouter);
 
   // NOT FOUND
   app.get('*', (req, res) => {
