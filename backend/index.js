@@ -14,6 +14,8 @@ const mongoClient = new MongoClient(MONGO_DB_URL, {
   useUnifiedTopology: true,
 });
 
+const MongoDbStart = require('./db/mongoDB');
+
 // ROUTES
 const resultsRouter = require('./routes/results');
 const apiRouter = require('./routes/api_tasks');
@@ -37,6 +39,7 @@ const PORT = 9090;
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+// START MONGODB
 let users;
 let results;
 
@@ -48,11 +51,11 @@ const start = async () => {
     results = db.collection('results');
     await users.createIndex({ login: 1 }, { unique: true });
 
+    // START LISTENER AFTER CONNECT TO MONGODB
     app.listen(PORT, () => {
       console.log(`Go to page http://localhost:${PORT}/`);
     });
   } catch (error) {
-    console.log('in4');
     console.log(error);
   }
 };

@@ -4,10 +4,6 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-// const app = require('../index');
-// const users = app.get('users');
-// const results = app.get('results');
-
 // POST GAME RESULT
 router.post('/', jsonParser, async (req, res) => {
   if (!req.body) return res.sendStatus(400);
