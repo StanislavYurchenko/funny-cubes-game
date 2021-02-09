@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
+// const app = require('../index');
+// const users = app.get('users');
+// const results = app.get('results');
+
 // POST GAME RESULT
 router.post('/', jsonParser, async (req, res) => {
   if (!req.body) return res.sendStatus(400);
@@ -26,7 +30,7 @@ router.post('/', jsonParser, async (req, res) => {
 
     await results.insertOne(result);
 
-    await req.session.users.updateOne(
+    await users.updateOne(
       { login: req.session.user.login },
       {
         $inc: { totalGames: +1 },
@@ -45,7 +49,7 @@ router.post('/', jsonParser, async (req, res) => {
 router.get('/', async (req, res) => {
   if (!req.session.isAuth) return res.redirect('/login');
   try {
-    const user = await req.session.users
+    const user = await users
       .find({ login: req.session.user.login })
       .sort({ score: -1 })
       .limit(1)
