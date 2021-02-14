@@ -24,7 +24,7 @@ export default class HallOfFame {
           ...result,
           position: index + 1,
         }));
-
+        console.log(results, user);
         return { results, user };
       })
       .then(({ results, user }) => {

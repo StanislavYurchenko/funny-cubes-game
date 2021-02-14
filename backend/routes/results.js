@@ -1,13 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
 const router = express.Router();
-const jsonParser = bodyParser.json();
+
+const mongoDb = require('../db/mongoDb');
 
 // POST GAME RESULT
-router.post('/', jsonParser, async (req, res) => {
+router.post('/', async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   if (!req.session.isAuth) return res.redirect('/login');
+
+  let users = await mongoDb.getUsersCursor();
+  let results = await mongoDb.getResultsCursor();
 
   const result = {
     login: req.session.user.login,
@@ -44,6 +46,10 @@ router.post('/', jsonParser, async (req, res) => {
 // GET GAME RESULT
 router.get('/', async (req, res) => {
   if (!req.session.isAuth) return res.redirect('/login');
+
+  let users = await mongoDb.getUsersCursor();
+  let results = await mongoDb.getResultsCursor();
+
   try {
     const user = await users
       .find({ login: req.session.user.login })
