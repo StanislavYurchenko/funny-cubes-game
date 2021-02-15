@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const errorTemplate = pug.compileFile('./templates/error-page.pug');
+const pug = require('pug');
+const errorTemplate = pug.compileFile('./templates/error_page.pug');
 
 // ERROR-PAGE
 router.use('/', async (req, res) => {
