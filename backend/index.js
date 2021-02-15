@@ -16,7 +16,6 @@ const indexRouter = require('./routes/index');
 const errorRouter = require('./routes/error_page');
 
 const app = express();
-// const PORT = 3000;
 const PORT = 9090;
 
 const jsonParser = bodyParser.json();

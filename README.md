@@ -17,7 +17,7 @@ field.
 ### User instructions:
 
 - download project
-- instal "docker desktop"
+- instal "docker desktop" (for windows)
   [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
 - start docker with MongoDB in the command line: "docker-compose up" in the directory
   ".../funny-cubes-game"

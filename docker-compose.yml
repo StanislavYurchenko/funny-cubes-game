@@ -1,6 +1,4 @@
 version: '3'
-# volumes:
-# mongodb_volume:
 
 services:
   web:
@@ -9,8 +7,6 @@ services:
     build: ./backend
     ports:
       - '9090:9090'
-    # links:
-    #   - mongo
     external_links:
       - mongo
 
@@ -22,5 +18,3 @@ services:
     #   - ./data:/data/db
     ports:
       - '27017:27017'
-    # volumes:
-    #   - mongodb_volume:/data/db
