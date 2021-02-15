@@ -1,0 +1,4 @@
+.git/
+backend/node_modules/
+frontend/
+docker-compose*.yml

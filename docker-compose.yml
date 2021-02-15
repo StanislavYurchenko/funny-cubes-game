@@ -1,10 +1,11 @@
-version: '3'
+version: '3.7'
 # volumes:
 # mongodb_volume:
 
 services:
   web:
     container_name: docker-node-mongo
+    image: docker-node
     restart: always
     build: ./backend
     ports:
@@ -13,6 +14,8 @@ services:
     #   - mongo
     external_links:
       - mongo
+    networks:
+      - node-network
 
   mongo:
     container_name: mongo
@@ -24,3 +27,9 @@ services:
       - '27017:27017'
     # volumes:
     #   - mongodb_volume:/data/db
+    networks:
+      - node-network
+
+networks:
+  node-network:
+    name: node-network
