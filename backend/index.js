@@ -23,13 +23,13 @@ const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // START MONGODB
-const mongoDb = require('./db/mongoDb');
+// const mongoDb = require('./db/mongoDb');
 
-const dbInit = async () => {
-  await mongoDb.startMongoDb();
-};
+// const dbInit = async () => {
+//   await mongoDb.startMongoDb();
+// };
 
-dbInit();
+// dbInit();
 
 app.listen(PORT, () => {
   console.log(`Go to page http://localhost:${PORT}/`);
