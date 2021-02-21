@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const dotenv = require('dotenv');
 
 // ROUTES
 const resultsRouter = require('./routes/results');
@@ -15,8 +16,10 @@ const logoutRouter = require('./routes/logout');
 const indexRouter = require('./routes/index');
 const errorRouter = require('./routes/error_page');
 
+dotenv.config();
+
 const app = express();
-const PORT = 9090;
+const PORT = process.env.PORT || 3000;
 
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
