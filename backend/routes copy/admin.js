@@ -4,7 +4,7 @@ const adminTemplate = pug.compileFile('./templates/admin.pug');
 
 const router = express.Router();
 
-const mongoDb = require('../db/mongoDb');
+const mongoDb = require('../models/mongoDb');
 
 // GET ADMIN PAGE
 router.get('/', async (req, res) => {

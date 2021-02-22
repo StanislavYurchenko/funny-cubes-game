@@ -6,8 +6,8 @@ import Timer from './components/Timer/Timer';
 import HallOfFame from './components/HallOfFame/HallOfFame';
 import RenderHallOfFame from './components/RenderHallOfFame/RenderHallOfFame';
 
-const gameDuration = 60000; //ms
-// const gameDuration = 4000; //ms
+// const gameDuration = 60000; //ms
+const gameDuration = 6000; //ms
 
 const btnStartGameRef = document.querySelector('.js-start');
 const btnNewGameRef = document.querySelector('.js-new-game');

@@ -6,15 +6,15 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 
 // ROUTES
-const resultsRouter = require('./routes/results');
-const apiRouter = require('./routes/api_tasks');
-const gameRouter = require('./routes/game');
-const adminRouter = require('./routes/admin');
-const registrationRouter = require('./routes/registration');
-const loginRouter = require('./routes/login');
-const logoutRouter = require('./routes/logout');
-const indexRouter = require('./routes/index');
-const errorRouter = require('./routes/error_page');
+const resultsRouter = require('./routes/results.route');
+const apiRouter = require('./routes/api_tasks.route');
+const gameRouter = require('./routes/game.route');
+const adminRouter = require('./routes/admin.route');
+const registrationRouter = require('./routes/registration.route');
+const loginRouter = require('./routes/login.route');
+const logoutRouter = require('./routes/logout.route');
+const indexRouter = require('./routes/index.route');
+const errorRouter = require('./routes/error_page.route');
 
 dotenv.config();
 
@@ -25,10 +25,10 @@ const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // START MONGODB
-const mongoDb = require('./db/mongoDb');
+const mongoDbInit = require('./db/mongoDb');
 
 const dbInit = async () => {
-  await mongoDb.startMongoDb();
+  await mongoDbInit();
 };
 
 dbInit();

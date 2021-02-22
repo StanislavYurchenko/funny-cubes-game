@@ -1,10 +1,7 @@
-const express = require('express');
 const pug = require('pug');
+const User = require('..//models/User');
+
 const registrationTemplate = pug.compileFile('./templates/registration.pug');
-
-const router = express.Router();
-
-const mongoDb = require('../db/mongoDb');
 
 const checkAuthRequest = req => {
   if (/[^a-z0-9]/.test(req.body?.login)) {
@@ -37,19 +34,17 @@ const checkAuthRequest = req => {
 };
 
 /// REGISTRATION
-router.get('/', (req, res) => {
+const get = (req, res) => {
   if (req.session.isAuth) return res.redirect('/game');
 
   res.type('.html');
-  res.send(registrationTemplate());
-});
+  return res.send(registrationTemplate());
+};
 
 // REGISTRATION
-router.post('/', async (req, res) => {
+const post = async (req, res) => {
   if (req.session.isAuth) return res.redirect('/game');
   checkAuthRequest(req);
-
-  let users = await mongoDb.getUsersCursor();
 
   const date = new Date();
   const normalizedDate = date.toLocaleDateString('en-US', { hour: 'numeric', minute: 'numeric' });
@@ -58,7 +53,7 @@ router.post('/', async (req, res) => {
   const role = req.body?.login === 'superadmin' ? 'admin' : 'gamer';
 
   try {
-    const user = {
+    const newUser = {
       name: req.body?.name,
       login: req.body?.login,
       password: req.body?.password,
@@ -69,28 +64,16 @@ router.post('/', async (req, res) => {
       bestResult: 0,
     };
 
-    users.insertOne(user, err => {
-      if (err) {
-        console.log(err);
-
-        req.session.backRoute = '/registration';
-        req.session.errorMessage = `Login "${req.body?.login}" isn't available`;
-        res.redirect('/error-page');
-        return;
-      }
-
-      users.findOne({ login: req.body?.login, password: req.body?.password }, (err, result) => {
-        if (err) return console.log('err', err);
-        if (result === null) res.redirect('/login-error');
-        req.session.user = result;
-        req.session.isAuth = true;
-        res.redirect('/game');
-        // client.close();
-      });
-    });
+    const user = await User.create({ ...newUser });
+    req.session.user = newUser;
+    req.session.isAuth = true;
+    return res.redirect('/game');
   } catch (error) {
     console.log(error);
+    req.session.backRoute = '/registration';
+    req.session.errorMessage = `Login "${req.body?.login}" isn't available`;
+    return res.redirect('/error-page');
   }
-});
+};
 
-module.exports = router;
+module.exports = { get, post };

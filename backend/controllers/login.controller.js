@@ -1,38 +1,30 @@
-const express = require('express');
 const pug = require('pug');
 const loginTemplate = pug.compileFile('./templates/login.pug');
 
-const router = express.Router();
-
-const mongoDb = require('../db/mongoDb');
+const User = require('..//models/User');
 
 // GET LOGIN
-router.get('/', (req, res) => {
+const get = (req, res) => {
   if (req.session.isAuth) return res.redirect('/game');
-
-  res.type('.html');
-  res.send(loginTemplate());
-});
+  return res.type('.html').send(loginTemplate());
+};
 
 // POST LOGIN
-router.post('/', async (req, res) => {
-  let users = await mongoDb.getUsersCursor();
-
+const post = async (req, res) => {
   try {
-    const user = await users.findOne({ login: req.body?.login, password: req.body?.password });
+    let user = await User.findOne({ login: req.body?.login, password: req.body?.password });
     if (user === null) {
       req.session.backRoute = '/login';
       req.session.errorMessage = `Login "${req.body?.login}" with this password was not found`;
       res.redirect('/error-page');
-      return;
+      return res.json(user);
     }
     req.session.user = user;
     req.session.isAuth = true;
-    res.redirect('/game');
-    // client.close();
+    return res.redirect('/game');
   } catch (error) {
     console.log(error);
   }
-});
+};
 
-module.exports = router;
+module.exports = { get, post };
