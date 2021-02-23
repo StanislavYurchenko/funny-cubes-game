@@ -36,7 +36,7 @@ body(class="body vh-100 d-flex")
                       select(class="form-control p-0" name="role"  )
                         option(value="gamer" selected = (value.role === "gamer"))  gamer
                         option(value="admin" selected = (value.role === "admin"))  admin
-                    button(type="submit" class="btn btn-primary rounded-pill d-block mx-auto") ok    
+                    button(type="submit" class="btn btn-primary rounded-pill d-block mx-auto" disabled = (value.name === "superadmin")) ok    
                 td(class="p-1 text-center py-3 text-break d-none d-md-table-cell") #{value.totalGames} / #{value.bestResult}
     div(class="row")
       div(class="mx-auto col-3 col-xl-2 mx-auto p-2")

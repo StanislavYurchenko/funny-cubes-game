@@ -16,8 +16,8 @@ body(class="body vh-100 d-flex")
               id="login" 
               aria-describedby="loginHelp" 
               name="login" 
-              value=""
               pattern ="[a-z0-9]{1,32}"
+              placeholder="login type:(a-z, 0-9)"
               required
               )/
             small(id="loginHelp" class="form-text text-muted") We'll never share your Login with anyone else.
@@ -29,7 +29,7 @@ body(class="body vh-100 d-flex")
               id="name" 
               aria-describedby="nameHelp" 
               name="name" 
-              value=""
+              placeholder="name"
               required
               )/
             small(id="loginHelp" class="form-text text-muted") We'll never share your Name with anyone else.
@@ -42,6 +42,7 @@ body(class="body vh-100 d-flex")
               name="password" 
               value=""
               minlength="8"
+              placeholder="password min-length-8"
               required
               )/
           div(class="form-group")
@@ -53,6 +54,10 @@ body(class="body vh-100 d-flex")
               name="confirm" 
               value=""
               minlength="8"
+              placeholder="password"
               required
               )/
           button(type="submit" class="btn btn-primary mx-auto") Create
+    div(class="row")
+      div(class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto p-5 card border-primary")
+        a(href="./login" class="btn btn-primary mx-auto") Login

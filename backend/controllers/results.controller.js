@@ -32,7 +32,7 @@ const post = async (req, res) => {
       .sort({ score: -1 })
       .limit(1);
 
-    const bestUserResult = bestUserResults[0].score;
+    const bestUserResult = bestUserResults[0]?.score || result?.score || 0;
 
     await Result.create({ ...result });
 

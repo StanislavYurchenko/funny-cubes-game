@@ -13,7 +13,7 @@ const get = async (req, res) => {
   }
 
   res.type('.html');
-  const USER_PER_PAGE = 5;
+  const USER_PER_PAGE = 3;
   const page = Number(req.query?.page ?? req.session.adminPage ?? 1);
 
   try {
@@ -40,8 +40,6 @@ const post = async (req, res) => {
   req.session.adminPage = req.query.page;
   const userRole = req.body.role;
   const selectedUser = req.query?.login;
-  console.log('selectedUser', selectedUser);
-  console.log('userRole', userRole);
 
   try {
     await User.updateOne({ login: selectedUser }, { $set: { role: userRole } }, {});

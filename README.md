@@ -19,7 +19,7 @@ field.
 - download project
 - open directory ... funny-cubes-game/backend
 - npm install
-- npm run start
+- npm run start:dev
 - open in the address bar your browser [https://localhost:9090](https://localhost:9090)
 - enjoy
 - give us high five and some good feedback
