@@ -1,4 +1,4 @@
-# [FUNNY SQUARE GAME](https://stanislavyurchenko.github.io/funny-cubes-game/)
+# [FUNNY SQUARE GAME](https://funny-cubes-game.herokuapp.com/)
 
 ## Goal of the game:
 
@@ -14,11 +14,22 @@ field.
 - The game ends after time is left or if all the spaces are filled with colored squares or colored
   squares disappear completely.
 
-### User instructions:
+### User instructions - local start:
+
+- download project
+- open directory ... funny-cubes-game/backend
+- npm install
+- npm run start
+- open in the address bar your browser [https://localhost:9090](https://localhost:9090)
+- enjoy
+- give us high five and some good feedback
+
+### User instructions - local start (only for version with docker ):
 
 - download project
 - instal "docker desktop" (for windows)
-  [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
+  [funny cubes game with docker](https://github.com/StanislavYurchenko/funny-cubes-game/tree/mongoDOckker)
+- go to brunch mongoDOckker in the command line: "git checkout mongoDOckker"
 - start docker with MongoDB in the command line: "docker-compose up" in the directory
   ".../funny-cubes-game"
 - start web-server in the command line: "npm start" in the directory ".../funny-cubes-game/backend"

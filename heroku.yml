@@ -1,4 +1,0 @@
-build:
-  docker:
-    mongodb: mongodb/Dockerfile
-    web: backend/Dockerfile

@@ -1,3 +1,6 @@
+const BASE_URL = 'http://localhost:9090';
+// const BASE_URL = 'https://funny-cubes-game.herokuapp.com';
+
 export default class HallOfFame {
   constructor() {
     this._ratingList = [];
@@ -17,7 +20,7 @@ export default class HallOfFame {
   }
 
   getResults(callback) {
-    fetch('http://localhost:9090/results')
+    fetch(`${BASE_URL}/results`)
       .then(res => res.json())
       .then(({ bestTenResults, user }) => {
         const results = bestTenResults.map((result, index) => ({
@@ -43,7 +46,7 @@ export default class HallOfFame {
       },
       body: JSON.stringify(member),
     };
-    fetch('http://localhost:9090/results', initPost)
+    fetch(`${BASE_URL}/results`, initPost)
       .then(res => res.json())
       .then(res => {
         callback();
